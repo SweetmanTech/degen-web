@@ -10,10 +10,10 @@ import { DiscordSession } from '../../src/core/interfaces/auth-session';
 const Connect = () => {
   const { account, active } = useWeb3React();
   const { data: session, status } = useSession();
-  const { user } = (session as DiscordSession);
+  const { user } = session ? (session as DiscordSession) : { user: undefined };
 
   useEffect(() => {
-    if (active && (user?.id)) {
+    if (active && user?.id) {
       fetch('/api/wallet/connect', {
         method: 'POST',
         body: JSON.stringify({
